@@ -1,17 +1,19 @@
 {
-  "name": "base-linter",
+  "name": "eslint-plugin-check-length",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test-rules.js",
-    "build": "cp index.js ./dist/index.js"
+    "test": "node test/test.js",
+    "build": "cp ./src/check-length.js ./dist/index.js && cp package.json dist/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
+  "dependencies": {
+    "eslint": "^8.34.0"
+  },
   "devDependencies": {
-    "eslint": "^8.34.0",
     "prettier": "^2.8.4"
   }
 }
