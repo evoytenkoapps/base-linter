@@ -7,6 +7,8 @@ module.exports = {
       meta: {
         // типы "problem", "suggestion" или "layout"
         type: "suggestion",
+        // правило может менять код
+        fixable: "code",
         // тут описываются аргументы правила
         schema: [
           {
@@ -34,12 +36,20 @@ module.exports = {
             // логика правила, работа с js
             if (callee.name === "someFunction") {
               const argument = arguments[0].value;
+              const firstArgument = arguments[0];
               const min = context.options[0]?.min || 2;
               if (argument.length < min) {
                 context.report({
                   node,
                   // текст ошибки, свойство из meta.messages
                   messageId: "someError",
+                  // фикс кода
+                  fix(fixer) {
+                    return fixer.insertTextAfterRange(
+                      [firstArgument.range[0], firstArgument.range[1] - 1],
+                      "+"
+                    );
+                  },
                 });
               }
             }

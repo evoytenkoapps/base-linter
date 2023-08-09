@@ -17,12 +17,14 @@ ruleTester.run("check-length", rule.rules["check-length"], {
     {
       code: `someFunction('e');`,
       errors: [rule.rules["check-length"].meta.messages.someError],
+      output: `someFunction('e+');`,
     },
     // тест аргумента переданного в options
     {
       code: `someFunction('1234');`,
       errors: [rule.rules["check-length"].meta.messages.someError],
       options: [{ min: 5 }],
+      output: `someFunction('1234+');`,
     },
   ],
 });
