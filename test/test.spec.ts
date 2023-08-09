@@ -1,10 +1,10 @@
-const { RuleTester } = require("eslint");
-const rule = require("../src/check-length");
+import { RuleTester } from "@typescript-eslint/rule-tester";
+import { rule } from "../src/check-length";
 
 const ruleTester = new RuleTester();
 
 // передаем название правила, само правило, тесты
-ruleTester.run("check-length", rule.rules["check-length"], {
+ruleTester.run("check-length", rule, {
   // успешный тест
   valid: [
     {
@@ -16,13 +16,21 @@ ruleTester.run("check-length", rule.rules["check-length"], {
     // тест аргумента по умолчанию
     {
       code: `someFunction('e');`,
-      errors: [rule.rules["check-length"].meta.messages.someError],
+      errors: [
+        {
+          messageId: "someError",
+        },
+      ],
       output: `someFunction('e+');`,
     },
     // тест аргумента переданного в options
     {
       code: `someFunction('1234');`,
-      errors: [rule.rules["check-length"].meta.messages.someError],
+      errors: [
+        {
+          messageId: "someError",
+        },
+      ],
       options: [{ min: 5 }],
       output: `someFunction('1234+');`,
     },

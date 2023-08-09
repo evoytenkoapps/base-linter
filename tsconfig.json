@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "commonjs",
+    "sourceMap": false,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    // Важная настройка, без нее могут быть баги импорта https://github.com/typescript-eslint/typescript-eslint/issues/7284
+    "moduleResolution": "node16"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "test"]
+}
