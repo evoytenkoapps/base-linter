@@ -2,7 +2,7 @@
 "use strict";
 
 export default {
-  displayName: "eslint-plugin-template",
+  displayName: "check-length",
   globals: {
     "ts-jest": {
       tsconfig: "tsconfig.json",
