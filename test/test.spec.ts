@@ -1,38 +1,40 @@
-import { RuleTester } from "@typescript-eslint/rule-tester";
-import { rule } from "../src/check-length";
+import { RuleTester } from "@angular-eslint/utils";
+import { rule } from "../src/async-assert";
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parser: "@angular-eslint/template-parser",
+});
 
-// передаем название правила, само правило, тесты
+const validCode = `<ng-container *ngIf="(accounts$ | async)?.status === 'COMPLETE'"></ng-container>`;
+
+// @ts-ignore
 ruleTester.run("check-length", rule, {
-  // успешный тест
   valid: [
     {
-      code: `someFunction('123');`,
+      code: validCode,
     },
   ],
-  // не успешный тест
   invalid: [
-    // тест аргумента по умолчанию
     {
-      code: `someFunction('e');`,
+      code: `<ng-container *ngIf="(accounts$ | async)!.status === 'COMPLETE'"></ng-container>`,
       errors: [
         {
           messageId: "someError",
         },
       ],
-      output: `someFunction('e+');`,
+      output: validCode,
     },
-    // тест аргумента переданного в options
     {
-      code: `someFunction('1234');`,
+      code: `<div></div>
+<ng-container *ngIf="(accounts$ | async)!.status === 'COMPLETE'"></ng-container>`,
       errors: [
         {
           messageId: "someError",
         },
       ],
-      options: [{ min: 5 }],
-      output: `someFunction('1234+');`,
+      output:
+        `<div></div>
+` + validCode,
     },
   ],
 });

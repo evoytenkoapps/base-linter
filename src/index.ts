@@ -1,5 +1,5 @@
-import {rule} from "./check-length";
+import { rule } from "./async-assert";
 
 export const rules = {
-    'check-length': rule,
-}
+  "async-assert.ts": rule,
+};
