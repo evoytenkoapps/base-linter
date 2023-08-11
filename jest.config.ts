@@ -1,5 +1,5 @@
 export default {
-  displayName: "check-length",
+  displayName: "async-assert",
   globals: {
     "ts-jest": {
       tsconfig: "tsconfig.json",

@@ -8,7 +8,7 @@ const ruleTester = new RuleTester({
 const validCode = `<ng-container *ngIf="(accounts$ | async)?.status === 'COMPLETE'"></ng-container>`;
 
 // @ts-ignore
-ruleTester.run("check-length", rule, {
+ruleTester.run("async-assert", rule, {
   valid: [
     {
       code: validCode,
