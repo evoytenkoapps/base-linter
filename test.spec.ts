@@ -1,5 +1,5 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
-import { rule } from "../src/check-length";
+import { rule } from "./src/check-length";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -7,7 +7,9 @@ const ruleTester = new RuleTester({
     ecmaFeatures: {
       jsx: true,
     },
-  }
+    project: "./tsconfig.json",
+    tsconfigRootDir: __dirname,
+  },
 });
 
 ruleTester.run("nonnull", rule, {
