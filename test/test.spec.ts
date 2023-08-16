@@ -1,38 +1,44 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
 import { rule } from "../src/check-length";
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+  }
+});
 
-// передаем название правила, само правило, тесты
-ruleTester.run("check-length", rule, {
-  // успешный тест
+ruleTester.run("nonnull", rule, {
   valid: [
     {
-      code: `someFunction('123');`,
+      code: `function App() {
+  const data: undefined | { data: string } = f1();
+  return (
+    <div>
+      <Welcome name={data?.data} />
+    </div>
+  );
+}`,
     },
   ],
-  // не успешный тест
+
   invalid: [
-    // тест аргумента по умолчанию
     {
-      code: `someFunction('e');`,
+      code: `function App() {
+  const data: undefined | { data: string } = f1();
+  return (
+    <div>
+      <Welcome name={data!.data} />
+    </div>
+  );
+}`,
       errors: [
         {
           messageId: "someError",
         },
       ],
-      output: `someFunction('e+');`,
-    },
-    // тест аргумента переданного в options
-    {
-      code: `someFunction('1234');`,
-      errors: [
-        {
-          messageId: "someError",
-        },
-      ],
-      options: [{ min: 5 }],
-      output: `someFunction('1234+');`,
     },
   ],
 });

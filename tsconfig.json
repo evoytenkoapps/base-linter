@@ -11,8 +11,8 @@
     "skipLibCheck": true,
     "types": ["node"],
     // Важная настройка, без нее могут быть баги импорта https://github.com/typescript-eslint/typescript-eslint/issues/7284
-    "moduleResolution": "node16"
+    "moduleResolution": "node16",
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "test"]
+  "exclude": ["node_modules", "test"],
 }
