@@ -42,7 +42,10 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
           const expression = value.expression;
           const obj = expression.object;
           if (obj.type === "TSNonNullExpression") {
-
+            context.report({
+              node,
+              messageId: "someError",
+            });
           }
         }
       },
