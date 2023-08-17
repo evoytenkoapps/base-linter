@@ -29,10 +29,7 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
   create(context) {
     return {
       JSXElement(node: any) {
-        const { callee } = node;
-
-        if (callee.name === "someFunction") {
-        }
+        const child = node.children;
       },
     };
   },

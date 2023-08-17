@@ -7,7 +7,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "skipLibCheck": true,
     "types": ["node"],
     // Важная настройка, без нее могут быть баги импорта https://github.com/typescript-eslint/typescript-eslint/issues/7284
