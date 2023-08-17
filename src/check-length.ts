@@ -1,4 +1,5 @@
 import { TSESLint } from "@typescript-eslint/utils";
+import type { TSESTree } from "@typescript-eslint/types";
 
 export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
   defaultOptions: [],
@@ -29,7 +30,11 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
   create(context) {
     return {
       JSXElement(node: any) {
-        const child = node.children;
+        const children = node.children;
+        if (children) {
+          const jsxElement = children.find((el) => (el.type = "JSXElement"));
+          const x = jsxElement;
+        }
       },
     };
   },
