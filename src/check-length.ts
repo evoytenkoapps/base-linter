@@ -33,25 +33,28 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
         const children = node.children;
         if (children) {
           const jsxElement = children.find(
-            (el) => (el.type = "JSXElement" && el.openingElement)
+            (el) => el.type === "JSXElement" && el?.openingElement
           );
-          const x = jsxElement.openingElement;
-          const attributes = x.attributes;
-          const attribute = attributes[0];
-          const value = attribute.value;
-          const expression = value.expression;
-          const obj = expression.object;
-          if (obj.type === "TSNonNullExpression") {
-            const expr = obj.expression;
-            const loc = {
-              line: obj.loc.start.line,
-              column: obj.loc.end.column - 1,
-            };
 
-            context.report({
-              loc,
-              messageId: "someError",
-            });
+          if (jsxElement) {
+            const x = jsxElement.openingElement;
+            const attributes = x.attributes;
+            const attribute = attributes[0];
+            const value = attribute.value;
+            const expression = value.expression;
+            const obj = expression.object;
+            if (obj?.type === "TSNonNullExpression") {
+              const expr = obj.expression;
+              const loc = {
+                line: obj.loc.start.line,
+                column: obj.loc.end.column - 1,
+              };
+
+              context.report({
+                loc,
+                messageId: "someError",
+              });
+            }
           }
         }
       },

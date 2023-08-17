@@ -19,7 +19,7 @@ ruleTester.run("nonnull", rule, {
   const data: undefined | { data: string } = f1();
   return (
     <div>
-      <Welcome name={data!.data} />
+      <Welcome name={data?.data} />
     </div>
   );
 }`,
