@@ -3,7 +3,6 @@
     "sourceRoot": ".",
     "target": "ES2019",
     "module": "commonjs",
-    "sourceMap": true,
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
