@@ -1,7 +1,7 @@
 import { TSESLint } from "@typescript-eslint/utils";
 import type { TSESTree } from "@typescript-eslint/types";
 
-export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
+export const rule: TSESLint.RuleModule<"someError"> = {
   defaultOptions: [],
   // информация о правиле
   meta: {
@@ -10,17 +10,7 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
     // правило может менять код
     fixable: "code",
     // тут описываются аргументы правила
-    schema: [
-      {
-        type: "object",
-        properties: {
-          min: {
-            type: "number",
-          },
-        },
-        additionalProperties: false,
-      },
-    ],
+    schema: undefined,
     // текст ошибки при репорте
     messages: {
       someError: "Длина аргумента функции должна быть больше",
