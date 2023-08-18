@@ -12,7 +12,7 @@ export const rule: TSESLint.RuleModule<"someError"> = {
     schema: undefined,
     // текст ошибки при репорте
     messages: {
-      someError: "Нельзя использовать null assert",
+      someError: "Нельзя использовать nonull assert в шаблоне",
     },
   },
   // тело правила
