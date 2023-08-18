@@ -31,23 +31,24 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
     return {
       JSXOpeningElement(node: any) {
         const attributes = node.attributes;
-        if (attributes && attributes.length > 0) {
-          const attribute = attributes[0];
-          const value = attribute.value;
-          const expression = value.expression;
-          const obj = expression.object;
-          if (obj?.type === "TSNonNullExpression") {
-            const expr = obj.expression;
-            const loc = {
-              line: obj.loc.start.line,
-              column: obj.loc.end.column - 1,
-            };
+        if (attributes) {
+          attributes.forEach((attribute) => {
+            const value = attribute.value;
+            const expression = value.expression;
+            const obj = expression.object;
+            if (obj?.type === "TSNonNullExpression") {
+              const expr = obj.expression;
+              const loc = {
+                line: obj.loc.start.line,
+                column: obj.loc.end.column - 1,
+              };
 
-            context.report({
-              loc,
-              messageId: "someError",
-            });
-          }
+              context.report({
+                loc,
+                messageId: "someError",
+              });
+            }
+          });
         }
       },
     };
