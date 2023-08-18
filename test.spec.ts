@@ -41,6 +41,14 @@ ruleTester.run("nonnull", rule, {
           messageId: "someError",
         },
       ],
+      output: `function App() {
+  const data: undefined | { data: string } = f1();
+  return (
+    <div>
+      <Welcome name={data?.data} />
+    </div>
+  );
+}`,
     },
   ],
 });
