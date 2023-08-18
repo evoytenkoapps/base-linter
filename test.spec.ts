@@ -1,5 +1,5 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
-import { rule } from "./src/check-length";
+import { rule } from "./src/nonull-assert";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",

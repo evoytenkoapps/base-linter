@@ -1,5 +1,5 @@
-import {rule} from "./check-length";
+import { rule } from "./nonull-assert";
 
 export const rules = {
-    'check-length': rule,
-}
+  "nonull-assert": rule,
+};
