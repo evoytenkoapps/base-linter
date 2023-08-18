@@ -1,5 +1,4 @@
 import { TSESLint } from "@typescript-eslint/utils";
-import type { TSESTree } from "@typescript-eslint/types";
 
 export const rule: TSESLint.RuleModule<"someError"> = {
   defaultOptions: [],
