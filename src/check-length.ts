@@ -13,7 +13,7 @@ export const rule: TSESLint.RuleModule<"someError"> = {
     schema: undefined,
     // текст ошибки при репорте
     messages: {
-      someError: "Длина аргумента функции должна быть больше",
+      someError: "Нельзя использовать null assert",
     },
   },
   // тело правила
