@@ -37,19 +37,19 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
             const expression = value?.expression;
             const obj = expression?.object;
             if (obj?.type === "TSNonNullExpression") {
-              const locData = {
+              const loc = {
                 line: obj.loc.start.line,
                 column: obj.loc.end.column - 1,
               };
 
               context.report({
-                loc: locData,
+                loc: loc,
                 messageId: "someError",
                 // фикс кода
                 fix: (fixer) => {
                   const range: TSESTree.Range = [
-                    locData.column + 89,
-                    locData.column + 90,
+                    loc.column + 89,
+                    loc.column + 90,
                   ];
 
                   return fixer.replaceTextRange(range, "?");
