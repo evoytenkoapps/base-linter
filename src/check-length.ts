@@ -42,17 +42,14 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
                 column: obj.loc.end.column - 1,
               };
 
+              const range = obj.expression.range;
+
               context.report({
                 loc: loc,
                 messageId: "someError",
                 // фикс кода
                 fix: (fixer) => {
-                  const range: TSESTree.Range = [
-                    loc.column + 89,
-                    loc.column + 90,
-                  ];
-
-                  return fixer.replaceTextRange(range, "?");
+                  return fixer.replaceTextRange([range[1], range[1] + 1], "?");
                 },
               });
             }
