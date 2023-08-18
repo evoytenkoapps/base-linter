@@ -29,32 +29,24 @@ export const rule: TSESLint.RuleModule<"someError", { min: number }[]> = {
   // тело правила
   create(context) {
     return {
-      JSXElement(node: any) {
-        const children = node.children;
-        if (children) {
-          const jsxElement = children.find(
-            (el) => el.type === "JSXElement" && el?.openingElement
-          );
+      JSXOpeningElement(node: any) {
+        const attributes = node.attributes;
+        if (attributes && attributes.length > 0) {
+          const attribute = attributes[0];
+          const value = attribute.value;
+          const expression = value.expression;
+          const obj = expression.object;
+          if (obj?.type === "TSNonNullExpression") {
+            const expr = obj.expression;
+            const loc = {
+              line: obj.loc.start.line,
+              column: obj.loc.end.column - 1,
+            };
 
-          if (jsxElement) {
-            const x = jsxElement.openingElement;
-            const attributes = x.attributes;
-            const attribute = attributes[0];
-            const value = attribute.value;
-            const expression = value.expression;
-            const obj = expression.object;
-            if (obj?.type === "TSNonNullExpression") {
-              const expr = obj.expression;
-              const loc = {
-                line: obj.loc.start.line,
-                column: obj.loc.end.column - 1,
-              };
-
-              context.report({
-                loc,
-                messageId: "someError",
-              });
-            }
+            context.report({
+              loc,
+              messageId: "someError",
+            });
           }
         }
       },
