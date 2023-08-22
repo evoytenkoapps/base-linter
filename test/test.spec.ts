@@ -1,38 +1,61 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
-import { rule } from "../src/check-length";
+import rule from "../src";
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: "module",
+  },
+});
 
-// передаем название правила, само правило, тесты
-ruleTester.run("check-length", rule, {
-  // успешный тест
+const filenameToCheck = "./file.ts"; // Adjust this to the actual path
+
+ruleTester.run("check-unhandled-rejection", rule, {
   valid: [
     {
-      code: `someFunction('123');`,
+      code: `
+        process.on("unhandledRejection", (reason, promise) => {
+          console.error("Unhandled Rejection at:", promise, "reason:", reason);
+        });
+      `,
+      filename: filenameToCheck,
     },
   ],
-  // не успешный тест
   invalid: [
-    // тест аргумента по умолчанию
     {
-      code: `someFunction('e');`,
+      code: `
+        console.log("Some code here");
+      `,
+      filename: filenameToCheck,
       errors: [
         {
           messageId: "someError",
         },
       ],
-      output: `someFunction('e+');`,
+      options: [
+        {
+          filename: "./file.ts", // Укажите фактический путь к файлу
+        },
+      ],
     },
-    // тест аргумента переданного в options
     {
-      code: `someFunction('1234');`,
+      code: `
+        process.on("rejectionHandled", (promise) => {
+          console.log("Rejection handled:", promise);
+        });
+      `,
+      filename: filenameToCheck,
       errors: [
         {
           messageId: "someError",
         },
       ],
-      options: [{ min: 5 }],
-      output: `someFunction('1234+');`,
+      options: [
+        {
+          filename: "./file.ts", // Укажите фактический путь к файлу
+        },
+      ],
     },
   ],
 });
