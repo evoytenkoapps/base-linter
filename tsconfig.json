@@ -3,7 +3,7 @@
     "target": "ES2019",
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "dist-node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": false,
