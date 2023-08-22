@@ -1,76 +1,75 @@
-import { Rule } from "eslint";
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-const rule: Rule.RuleModule = {
-  meta: {
-    docs: {
-      description: "Check for missing unhandledRejection event subscription",
-      category: "Best Practices",
-      recommended: true,
-    },
-    messages: {
-      someError: "Нельзя использовать nonull assert в шаблоне",
-    },
-    schema: [
-      {
-        type: "object",
-        properties: {
-          filename: {
-            type: "string",
-          },
-        },
-        additionalProperties: false,
+export const rules = {
+  "check-length": {
+    meta: {
+      docs: {
+        description: "Check for missing unhandledRejection event subscription",
+        category: "Best Practices",
+        recommended: true,
       },
-    ],
-    fixable: null, // We won't provide an automatic fix
-  },
-  create(context) {
-    const filenameToCheck = context.options[0]?.filename;
+      messages: {
+        someError: "Нельзя использовать nonull assert в шаблоне",
+      },
+      schema: [
+        {
+          type: "object",
+          properties: {
+            filename: {
+              type: "string",
+            },
+          },
+          additionalProperties: false,
+        },
+      ],
+      fixable: null, // We won't provide an automatic fix
+    },
+    create(context) {
+      const filenameToCheck = context.options[0]?.filename;
 
-    return {
-      Program(node: TSESTree.Program) {
-        const filename = context.getFilename();
-        if (filename !== filenameToCheck) {
-          return; // Skip files that are not the target
-        }
+      return {
+        Program(node: TSESTree.Program) {
+          const filename = context.getFilename();
+          if (filename !== filenameToCheck) {
+            return; // Skip files that are not the target
+          }
 
-        let hasUnhandledRejectionListener = false;
+          let hasUnhandledRejectionListener = false;
 
-        node.body.forEach((statement) => {
-          if (
-            statement.type === "ExpressionStatement" &&
-            statement.expression.type === "CallExpression"
-          ) {
-            const callee = statement.expression.callee;
+          node.body.forEach((statement) => {
             if (
-              callee.type === "MemberExpression" &&
-              callee.object.type === "Identifier" &&
-              callee.object.name === "process" &&
-              callee.property.type === "Identifier" &&
-              callee.property.name === "on" &&
-              statement.expression.arguments.length >= 2
+              statement.type === "ExpressionStatement" &&
+              statement.expression.type === "CallExpression"
             ) {
-              const eventArg = statement.expression.arguments[0];
+              const callee = statement.expression.callee;
               if (
-                eventArg.type === "Literal" &&
-                typeof eventArg.value === "string" &&
-                eventArg.value === "unhandledRejection"
+                callee.type === "MemberExpression" &&
+                callee.object.type === "Identifier" &&
+                callee.object.name === "process" &&
+                callee.property.type === "Identifier" &&
+                callee.property.name === "on" &&
+                statement.expression.arguments.length >= 2
               ) {
-                hasUnhandledRejectionListener = true;
+                const eventArg = statement.expression.arguments[0];
+                if (
+                  eventArg.type === "Literal" &&
+                  typeof eventArg.value === "string" &&
+                  eventArg.value === "unhandledRejection"
+                ) {
+                  hasUnhandledRejectionListener = true;
+                }
               }
             }
-          }
-        });
-
-        if (!hasUnhandledRejectionListener) {
-          context.report({
-            node,
-            messageId: "someError",
           });
-        }
-      },
-    };
+
+          if (!hasUnhandledRejectionListener) {
+            context.report({
+              node,
+              messageId: "someError",
+            });
+          }
+        },
+      };
+    },
   },
 };
-
-export = rule;

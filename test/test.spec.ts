@@ -1,5 +1,5 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
-import rule from "../src";
+import { rules } from "../src/index";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -11,7 +11,8 @@ const ruleTester = new RuleTester({
 
 const filenameToCheck = "./file.ts"; // Adjust this to the actual path
 
-ruleTester.run("check-unhandled-rejection", rule, {
+// @ts-ignore
+ruleTester.run("check-unhandled-rejection", rules["check-length"], {
   valid: [
     {
       code: `
