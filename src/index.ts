@@ -9,7 +9,7 @@ export const rules = {
         recommended: true,
       },
       messages: {
-        someError: "Нельзя использовать nonull assert в шаблоне",
+        someError: "Добавьте проверку unhandledRejection",
       },
       schema: [
         {
