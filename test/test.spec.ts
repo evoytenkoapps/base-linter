@@ -1,15 +1,9 @@
 import { RuleTester } from "@typescript-eslint/rule-tester";
 import { rules } from "../src";
 
-const ruleTester = new RuleTester({
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: 2021,
-    sourceType: "module",
-  },
-});
+const ruleTester = new RuleTester();
 
-const filenameToCheck = "./file.ts"; // Adjust this to the actual path
+const filenameToCheck = "./file.ts";
 
 // @ts-ignore
 ruleTester.run("check-unhandled-rejection", rules["check-length"], {
